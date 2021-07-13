@@ -5,6 +5,10 @@ const notifySchema = new Schema({
 	email: {
 		type: String,
 		required: true
+	},
+	date_created: {
+		type: Date,
+		default: Date.now
 	}
 })
 

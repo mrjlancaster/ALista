@@ -17,14 +17,19 @@ const createToken = (id) => {
 }
 
 // LANDING PAGE NOTIFICATION EMAIL HANDLER
-router.post('/notify-me', (req, res) => {
+router.post('/notify', (req, res) => {
 	const { email } = req.body;
+	const currentDate = new Date();
 
 	const notifyUser = new Notify ({
-		email: email
+		email: email,
+		date_created: currentDate
 	})
 	
 	notifyUser.save()
+		.then(email => {
+			res.status(201).json({ email: email._id });
+		})
 		.catch(error => handleErrors(error))
 })
 
