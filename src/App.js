@@ -1,14 +1,12 @@
-import './App.css';
+import "./App.css";
 // import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
 // import Homepage from './layouts/Homepage';
 // import Login from './layouts/Login';
 // import Register from './layouts/Register';
-import LandingPage from './layouts/LandingPage';
+import LandingPage from "./layouts/LandingPage";
 
-const App =() => {	
+const App = () => {
 	return (
-
 		<LandingPage />
 		// <Router>
 		// 	<div className="App">
@@ -25,6 +23,6 @@ const App =() => {
 		// 	</div>
 		// </Router>
 	);
-}
+};
 
 export default App;
