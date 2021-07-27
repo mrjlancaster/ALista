@@ -79,11 +79,9 @@ const Register = () => {
 				passwordTwoError: ''
 			 })
 
-
 			console.log('form validated and sent');
 		}
 	}
-
 
 	return (
 		<div className="register_container">

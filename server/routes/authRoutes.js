@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Notify = require('../models/Notify');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const cookieParser = require('cookie-parser');
 
 // handle errors function
 const handleErrors = (err) => {
@@ -15,6 +15,24 @@ const handleErrors = (err) => {
 const createToken = (id) => {
 	return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 })
 }
+
+// LANDING PAGE NOTIFICATION EMAIL HANDLER
+router.post('/notify', (req, res) => {
+	const { email } = req.body;
+	const currentDate = new Date();
+
+	const notifyUser = new Notify ({
+		email: email,
+		date_created: currentDate
+	})
+	
+	notifyUser.save()
+		.then(email => {
+			res.status(201).json({ email: email._id });
+		})
+		.catch(error => handleErrors(error))
+})
+
 
 // REGISTER USER
 router.post('/newUser', (req, res) => {

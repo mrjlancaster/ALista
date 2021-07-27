@@ -1,0 +1,153 @@
+.landing__page {
+	background-color: #000;
+	width: 100vw;
+	height: 100vh;
+}
+
+.landing__page--content {
+	position: relative;
+	width: 90%;
+	height: 100vh;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.coming__soon--title {
+	position: absolute;
+	left: 0;
+	top: 10px;
+	color: #fff;
+}
+
+.coming__soon--text {
+	color: #fff;
+	font-size: 100px;
+	letter-spacing: .3em;
+}
+
+.hashtag {
+	color: #fff;
+	text-align: center;
+}
+
+/* notify me styles */
+.notify__me--wrapper {
+	display: flex;
+	border: 3px solid #fff;
+	border-radius: 4px;
+	width: 500px;
+	justify-content: space-between;
+	position: absolute;
+	top: 88%;
+}
+
+.notify__me--input {
+	outline: none;
+	padding: 10px;
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	width: 300px;
+}
+
+/* notify button */
+.get__notified--btn {
+	display: flex;
+	border: none;
+	font-family: Arial, Helvetica, sans-serif;
+	border-left: 1px solid #fff;
+	font-size: 16px;
+	color: #fff;
+	align-items: center;
+	padding: 0 10px;
+	background: none;
+	cursor: pointer;
+}
+
+.get__notified--btn i {
+	margin-left: 8px;
+	transition: all 300ms ease;
+}
+
+.get__notified--btn:hover i {
+	transform: translateX(3px);
+}
+
+/* copyright */
+.copyrights {
+	font-size: 11px;
+	position: absolute;
+	top: 98%;
+	letter-spacing: .4em;
+	left: 50%;
+	color: rgba(180, 180, 180, 0.667);
+	transform: translate(-50%, -50%);
+}
+
+/* BREAKPOINT (SMALL) */
+@media (max-width: 668px) {
+	.landing__page--content {
+		width: 100%;
+		margin: 0;
+		align-items: flex-start;
+	}
+
+	.coming__soon--title {
+		left: 30px;
+		font-size: 14px;
+		font-weight: 200;
+	}
+
+	.coming__soon--text {
+		font-size: 60px;
+		line-height: 1em;
+		letter-spacing: .1em;
+		width: 200px;
+		margin-left: 30px;
+	}
+
+	.notify__me--wrapper {
+		width: 90vw;
+		justify-content: space-between;
+		top: 90%;
+		left: 50%;
+		transform: translate(-50%);
+	}
+
+	.notify__me--input {
+		padding: 6px 10px;
+		font-size: 12px;
+	}
+
+	.notify__me--input::placeholder {
+		letter-spacing: .1em;
+	}
+
+	.get__notified--btn {
+		font-size: 12px;
+		padding: 0 10px;
+		width: 30%;
+	}
+	
+	.get__notified--btn i {
+		margin-left: 5px;
+	}
+
+	.copyrights {
+		font-size: 10px;
+		letter-spacing: .1em;
+		width: 100%;
+		text-align: center;
+	}
+}
+
+/* BREAKPOINT (MEDIUM) */
+@media (min-width: 689px) and (max-width: 985px) {
+	.coming__soon--text {
+		text-align: center;
+	}
+}

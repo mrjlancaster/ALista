@@ -16,9 +16,9 @@ const Body = () => {
 				<div>
 					<input type="text" className="register_input" name="email" placeholder="emailadress@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
 				</div>
-					<Link to='/register' className="register_link">
-						Create account <i className="fas fa-long-arrow-alt-right"></i>
-					</Link>
+				<Link to='/register' className="register_link">
+					Create account <i className="fas fa-long-arrow-alt-right"></i>
+				</Link>
 			</div>
 
 			<p className="copyrights">Copyright &copy; 2020 All Rights Reserved</p>
