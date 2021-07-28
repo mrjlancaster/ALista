@@ -1,14 +1,13 @@
-import Header from '../components/Header';
-import Body from '../components/Body';
+import Navbar from "../components/Navbar";
+import Body from "../components/Body";
 
 const Homepage = () => {
-
-    return (
-        <>
-        <Header />
-        <Body />
-        </>
-    )
-}
+	return (
+		<>
+			<Navbar />
+			<Body />
+		</>
+	);
+};
 
 export default Homepage;
