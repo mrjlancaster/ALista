@@ -5,6 +5,14 @@
   "proxy": "http://localhost:5000",
   "homepage": "https://mrjlancaster.github.io/A-Lista/",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "server": "cd server && nodemon server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"npm run server\" \"npm run start\""
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
@@ -33,14 +41,6 @@
   "author": "Jonathan Lancaster",
   "bugs": {
     "url": "https://github.com/mrjlancaster/A-Lista/issues"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "server": "cd server && nodemon server.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "concurrently \"npm run server\" \"npm run start\""
   },
   "eslintConfig": {
     "extends": [
