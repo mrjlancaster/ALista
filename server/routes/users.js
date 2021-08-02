@@ -8,6 +8,9 @@ router.post("/register", async (req, res) => {
 	const { firstName, lastName, email, password } = req.body;
 
 	try {
+		const salt = await bcrypt.genSalt(12);
+		const hashPassword = await bcrypt.hash(password, salt);
+
 		// Client side form validation
 		if (!firstName || !lastName || !email || !password)
 			throw Error("Please enter all fields");
@@ -24,7 +27,7 @@ router.post("/register", async (req, res) => {
 		// Create new user
 		const newUser = await pool.query(
 			"INSERT INTO users (first_name, last_name, email, hashedpassword) VALUES ($1, $2, $3, $4) RETURNING *",
-			[firstName, lastName, email, password]
+			[firstName, lastName, email, hashPassword]
 		);
 
 		res.status(200).json({
