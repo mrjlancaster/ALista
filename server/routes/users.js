@@ -5,22 +5,33 @@ const pool = require("../db");
 
 // create user (register)
 router.post("/register", async (req, res) => {
-	const { firstName, lastName, email } = req.body;
+	const { firstName, lastName, email, password } = req.body;
 
 	try {
-		if (!firstName || !lastName || !email)
+		// Client side form validation
+		if (!firstName || !lastName || !email || !password)
 			throw Error("Please enter all fields");
 
-		const newUser = await pool.query(
-			"INSERT INTO users (first_name, last_name, email) VALUES ($1, $2, $3) RETURNING *",
-			[firstName, lastName, email]
+		// Check if user already exists
+		const user = await pool.query(
+			"SELECT email FROM users WHERE email = $1",
+			[email]
 		);
 
-		res.json(newUser.rows);
+		if (user.rows.length && user.rows[0].email === email)
+			throw Error("User already exists");
 
-		// res.status(200).json({ message: "Success" });
+		// Create new user
+		const newUser = await pool.query(
+			"INSERT INTO users (first_name, last_name, email, hashedpassword) VALUES ($1, $2, $3, $4) RETURNING *",
+			[firstName, lastName, email, password]
+		);
+
+		res.status(200).json({
+			data: newUser.rows[0],
+			message: "New user created",
+		});
 	} catch (error) {
-		console.log(error);
 		res.status(400).json({ message: error.message });
 	}
 
