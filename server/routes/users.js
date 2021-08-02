@@ -6,13 +6,16 @@ const pool = require("../db");
 // create user (register)
 router.post("/register", async (req, res) => {
 	try {
-		const { firstName, lastName, email, password } = req.body;
+		const { firstName, lastName, email, password, confirmPassword } =
+			req.body;
 		const salt = await bcrypt.genSalt(12);
 		const hashPassword = await bcrypt.hash(password, salt);
 
 		// Client side form validation
 		if (!firstName || !lastName || !email || !password)
 			throw Error("Please enter all fields");
+
+		if (password !== confirmPassword) throw Error("Password must match");
 
 		// Check if user already exists
 		const user = await pool.query(

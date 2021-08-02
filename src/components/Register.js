@@ -52,7 +52,7 @@ const Register = ({ registrationEmail }) => {
 	// 	return true;
 	// };
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		const data = {
@@ -69,26 +69,18 @@ const Register = ({ registrationEmail }) => {
 			},
 		};
 
-		// const isValid = validateForm();
-
-		// // Handle post request
-		axios({
-			url: "/api/newUser",
-			method: "POST",
-			data,
-			config,
-		})
-			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
-
-		setErrorMessage({
-			nameError: "",
-			emailError: "",
-			passwordError: "",
-			passwordTwoError: "",
-		});
-
-		console.log("form validated and sent");
+		try {
+			const response = await axios.post("/api/register", data, config);
+			console.log(response.data);
+			setErrorMessage({
+				nameError: "",
+				emailError: "",
+				passwordError: "",
+				passwordTwoError: "",
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
