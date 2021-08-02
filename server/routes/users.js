@@ -5,9 +5,8 @@ const pool = require("../db");
 
 // create user (register)
 router.post("/register", async (req, res) => {
-	const { firstName, lastName, email, password } = req.body;
-
 	try {
+		const { firstName, lastName, email, password } = req.body;
 		const salt = await bcrypt.genSalt(12);
 		const hashPassword = await bcrypt.hash(password, salt);
 
@@ -37,25 +36,6 @@ router.post("/register", async (req, res) => {
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}
-
-	// check if user already exists
-	// User.findOne({ email }).then((user) => {
-	// 	if (user) return res.status(400).json({ msg: "User already exists" });
-
-	// 	const newUser = new User({
-	// 		name,
-	// 		email,
-	// 		password,
-	// 	});
-
-	// 	bcrypt.genSalt(10, (err, salt) => {
-	// 		bcrypt.hash(newUser.password, salt, (err, hash) => {
-	// 			if (err) throw err;
-	// 			newUser.password = hash;
-	// 			newUser.save();
-	// 		});
-	// 	});
-	// });
 });
 
 // get a user (login)
@@ -106,9 +86,9 @@ router.delete("/users/:id", async (req, res) => {
 		const { id } = req.params;
 		await pool.query("DELETE FROM users WHERE user_id = $1", [id]);
 
-		res.json("user was successfully deleted");
+		res.json("user deleted successfully");
 	} catch (error) {
-		console.log(error);
+		res.status(500).json({ message: "Something went wrong" });
 	}
 });
 
