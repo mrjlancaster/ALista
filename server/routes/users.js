@@ -1,48 +1,15 @@
 const express = require("express");
-const router = express.Router();
+const site = express.Router();
 const bcrypt = require("bcryptjs");
 const pool = require("../db");
+const { login, register, private } = require("../controllers/auth");
 
-// create user (register)
-router.post("/register", async (req, res) => {
-	try {
-		const { firstName, lastName, email, password, confirmPassword } =
-			req.body;
-		const salt = await bcrypt.genSalt(12);
-		const hashPassword = await bcrypt.hash(password, salt);
-
-		// Client side form validation
-		if (!firstName || !lastName || !email || !password)
-			throw Error("Please enter all fields");
-
-		if (password !== confirmPassword) throw Error("Password must match");
-
-		// Check if user already exists
-		const user = await pool.query(
-			"SELECT email FROM users WHERE email = $1",
-			[email]
-		);
-
-		if (user.rows.length && user.rows[0].email === email)
-			throw Error("User already exists");
-
-		// Create new user
-		const newUser = await pool.query(
-			"INSERT INTO users (first_name, last_name, email, hashedpassword) VALUES ($1, $2, $3, $4) RETURNING *",
-			[firstName, lastName, email, hashPassword]
-		);
-
-		res.status(200).json({
-			data: newUser.rows[0],
-			message: "New user created",
-		});
-	} catch (error) {
-		res.status(400).json({ message: error.message });
-	}
-});
+site.post("/login", login);
+site.post("/register", register);
+site.post("/private", private);
 
 // get a user (login)
-router.get("/users", async (req, res) => {
+site.get("/users", async (req, res) => {
 	try {
 		const allUsers = await pool.query("SELECT first_name FROM users");
 
@@ -54,7 +21,7 @@ router.get("/users", async (req, res) => {
 });
 
 // get user by id
-router.get("/users/:id", async (req, res) => {
+site.get("/users/:id", async (req, res) => {
 	const { id } = req.params;
 	try {
 		const user = await pool.query("SELECT * FROM users WHERE user_id = $1", [
@@ -68,7 +35,7 @@ router.get("/users/:id", async (req, res) => {
 });
 
 // update user
-router.patch("/users/:id", async (req, res) => {
+site.patch("/users/:id", async (req, res) => {
 	try {
 		const { id } = req.params; // WHERE
 		const { update } = req.body; // SET
@@ -84,7 +51,7 @@ router.patch("/users/:id", async (req, res) => {
 });
 
 // delete a user
-router.delete("/users/:id", async (req, res) => {
+site.delete("/users/:id", async (req, res) => {
 	try {
 		const { id } = req.params;
 		await pool.query("DELETE FROM users WHERE user_id = $1", [id]);
@@ -95,4 +62,4 @@ router.delete("/users/:id", async (req, res) => {
 	}
 });
 
-module.exports = router;
+module.exports = site;
