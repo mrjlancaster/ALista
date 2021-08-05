@@ -82,8 +82,8 @@ const login = async (req, res, next) => {
 	next();
 };
 
-const private = (req, res, next) => {
+const privateRoute = (req, res, next) => {
 	next();
 };
 
-module.exports = { login, register, private };
+module.exports = { login, register, privateRoute };

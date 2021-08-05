@@ -1,10 +1,10 @@
 const express = require("express");
 const site = express.Router();
-const { login, register, private } = require("../controllers/auth");
+const { login, register, privateRoute } = require("../controllers/auth");
 
 site.post("/login", login);
 site.post("/register", register);
-site.post("/private", private);
+site.post("/private", privateRoute);
 
 // get a user (login)
 site.get("/users", async (req, res) => {

@@ -127,6 +127,20 @@ const Register = ({ registrationEmail }) => {
 						<div className="errorMessage">{errorMessage.nameError}</div>
 
 						<input
+							className={
+								errorMessage ? "register_name-input" : "notValid"
+							}
+							// className="register_name-input"
+							type="text"
+							placeholder="Last name*"
+							name="last_name"
+							value={lastName}
+							onChange={(e) => setLastName(e.target.value)}
+							// required
+						/>
+						<div className="errorMessage">{errorMessage.nameError}</div>
+
+						<input
 							className="register_email-input"
 							type="email"
 							placeholder="Email*"
