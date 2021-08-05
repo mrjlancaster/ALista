@@ -1,7 +1,5 @@
 const express = require("express");
 const site = express.Router();
-const bcrypt = require("bcryptjs");
-const pool = require("../db");
 const { login, register, private } = require("../controllers/auth");
 
 site.post("/login", login);

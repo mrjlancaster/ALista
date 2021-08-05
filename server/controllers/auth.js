@@ -1,3 +1,11 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const pool = require("../db");
+
+const generateToken = (id, email, secret) => {
+	return jwt.sign({ id, email }, secret);
+};
+
 const register = async (req, res, next) => {
 	try {
 		const { firstName, lastName, email, password, confirmPassword } =
@@ -20,15 +28,22 @@ const register = async (req, res, next) => {
 		if (user.rows.length && user.rows[0].email === email)
 			throw Error("User already exists");
 
-		// Create new user
+		// Create and save new user
 		const newUser = await pool.query(
 			"INSERT INTO users (first_name, last_name, email, hashedpassword) VALUES ($1, $2, $3, $4) RETURNING *",
 			[firstName, lastName, email, hashPassword]
 		);
 
-		res.status(200).json({
-			data: newUser.rows[0],
-			message: "New user created",
+		const token = generateToken(
+			newUser.rows[0].user_id,
+			newUser.rows[0].email,
+			process.env.SECRET_TOKEN
+		);
+
+		res.status(201).json({
+			user: newUser.rows[0].user_id,
+			data: token,
+			message: "New user created successfully!",
 		});
 	} catch (error) {
 		res.status(400).json({ message: error.message });
