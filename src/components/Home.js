@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
-import "./Body.css";
+import "./home.css";
 
 const Home = ({ registrationEmail, setRegistrationEmail }) => {
 	return (

@@ -30,11 +30,13 @@
 	font-weight: 500;
 	color: #fff;
 	text-decoration: none;
+	transition: all 200ms ease;
 }
 
 .li-font:hover {
 	background-color: #fff;
 	color: #000;
+	transition: all 200ms ease;
 }
 
 .signIn {
