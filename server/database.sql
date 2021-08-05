@@ -7,3 +7,8 @@ CREATE TABLE users(
 	email VARCHAR(100) UNIQUE,
 	hashedpassword VARCHAR(60)
 );
+
+CREATE TABLE newsletter(
+	id SERIAL PRIMARY KEY,
+	email VARCHAR(45)
+);

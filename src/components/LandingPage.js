@@ -1,45 +1,29 @@
-import React, { useState } from 'react';
-import './LandingPage.css';
-// import axios from 'axios';
+import React, { useState } from "react";
+import "./LandingPage.css";
+import axios from "axios";
 
 const LandingPage = () => {
-	const [ msg, setMsg ] = useState('Coming soon')
-	const [ email, setEmail ] = useState({
-		email: ''
-	});
+	const [message, setMessage] = useState("Coming soon");
+	const [email, setEmail] = useState("");
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (email.email === '') {
-			return false;
+		if (email === "") return false;
+
+		try {
+			const data = { email };
+			const config = { headers: { "Content-Type": "application/json" } };
+
+			const response = await axios.post("/api/newsletter", data, config);
+			console.log(response.data);
+			// clear input field
+			setEmail({ email: "" });
+			setMessage("Thank you!");
+		} catch (error) {
+			console.log(error);
 		}
-
-		const option = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(email)
-		}
-
-		fetch('/api/notify', option)
-			.then(response => response.json())
-			.catch(error => error)
-
-
-		// axios({
-		// 	url: '/api/notify-me',
-		// 	method: 'post',
-		// 	data: email
-		// })
-		// .then(res => console.log(res))
-		// .catch(err => console.log(err));
-
-		// clear input field
-		setEmail({email: ''});
-		setMsg('Thank you!')
-	}
+	};
 
 	return (
 		<div className="landing__page">
@@ -47,17 +31,17 @@ const LandingPage = () => {
 				<h2 className="coming__soon--title">A-LISTA</h2>
 				{/* <p className="hashtag">#Underconstruction</p> */}
 				<div className="coming__soon">
-					<p className="coming__soon--text">{msg}</p>
+					<p className="coming__soon--text">{message}</p>
 				</div>
 
 				<form onSubmit={handleSubmit} className="notify__me--wrapper">
-					<input 
-						type="text" 
-						name="email" 
-						className="notify__me--input" 
-						placeholder="youremail@example.com" 
-						value={email.email} 
-						onChange={(e) => setEmail({email: e.target.value})} 
+					<input
+						type="text"
+						name="email"
+						className="notify__me--input"
+						placeholder="youremail@example.com"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
 						required
 					/>
 					<button type="submit" className="get__notified--btn">
@@ -67,7 +51,7 @@ const LandingPage = () => {
 			</div>
 			<p className="copyrights">Copyright &copy; 2020 All Rights Reserved</p>
 		</div>
-	)
-}
+	);
+};
 
 export default LandingPage;
