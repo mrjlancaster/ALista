@@ -20,10 +20,9 @@ const register = async (req, res, next) => {
 		if (password !== confirmPassword) throw Error("Password must match");
 
 		// Check if user already exists
-		const user = await pool.query(
-			"SELECT email FROM users WHERE email = $1",
-			[email]
-		);
+		const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+			email,
+		]);
 
 		if (user.rows.length && user.rows[0].email === email)
 			throw Error("User already exists");
@@ -53,6 +52,33 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+	try {
+		const { email, password } = req.body;
+		// 1. validate form
+		if (!email || !password) throw Error("Email and password required");
+		// 2. check if user exists
+		const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+			email,
+		]);
+
+		if (user) {
+			// 2. verify and authenticate user
+			if (await bcrypt.compare(password, user.rows[0].hashedpassword)) {
+				const token = generateToken(
+					user.rows[0].id,
+					user.rows[0].email,
+					process.env.SECRET_TOKEN
+				);
+
+				return res.status(200).json({
+					user: user.rows[0].user_id,
+					data: token,
+				});
+			}
+		}
+	} catch (error) {
+		res.status(400).json(error.message);
+	}
 	next();
 };
 
