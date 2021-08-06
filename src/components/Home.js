@@ -1,12 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "./Navbar";
 import "./home.css";
+import "./Header.css";
 
 const Home = ({ registrationEmail, setRegistrationEmail }) => {
 	return (
 		<>
-			<Navbar />
+			<header className="header">
+				<h2>
+					<Link to="/">A-LISTA</Link>
+				</h2>
+				<nav className="navigation_links">
+					<Link to="/login" className="li-font signIn">
+						Login
+					</Link>
+					<Link to="/register" className="li-font register">
+						Create your account
+					</Link>
+				</nav>
+			</header>
 			<div className="body_container">
 				<div className="body_description-wrapper">
 					<h1>Your guests deserve to be reserved</h1>
