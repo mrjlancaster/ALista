@@ -15,7 +15,7 @@ const LandingPage = () => {
 			const data = { email };
 			const config = { headers: { "Content-Type": "application/json" } };
 
-			const response = await axios.post("/api/newsletter", data, config);
+			const response = await axios.post("/api/notify", data, config);
 			console.log(response.data);
 			// clear input field
 			setEmail({ email: "" });
