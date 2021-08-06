@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -9,6 +10,7 @@ const Register = ({ registrationEmail }) => {
 	const [email, setEmail] = useState(registrationEmail);
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	let history = useHistory();
 
 	const [errorMessage, setErrorMessage] = useState({
 		nameError: "",
@@ -71,13 +73,13 @@ const Register = ({ registrationEmail }) => {
 
 		try {
 			const response = await axios.post("/api/register", data, config);
-			console.log(response.data);
-			setErrorMessage({
-				nameError: "",
-				emailError: "",
-				passwordError: "",
-				passwordTwoError: "",
-			});
+			const isAuthenticated = await response.data.success;
+			const token = await response.data.token;
+
+			if (isAuthenticated && token) {
+				localStorage.setItem("Token", token);
+				history.push("/dashboard");
+			}
 		} catch (error) {
 			console.log(error);
 		}

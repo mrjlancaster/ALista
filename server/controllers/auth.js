@@ -40,8 +40,9 @@ const register = async (req, res, next) => {
 		);
 
 		res.status(201).json({
+			success: true,
 			user: newUser.rows[0].user_id,
-			data: token,
+			token,
 			message: "New user created successfully!",
 		});
 	} catch (error) {
