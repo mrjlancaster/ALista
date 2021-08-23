@@ -48,8 +48,6 @@ const register = async (req, res, next) => {
 	} catch (error) {
 		res.status(400).json({ message: error.message });
 	}
-
-	next();
 };
 
 const login = async (req, res, next) => {
@@ -80,11 +78,8 @@ const login = async (req, res, next) => {
 	} catch (error) {
 		res.status(400).json(error.message);
 	}
-	next();
 };
 
-const privateRoute = (req, res, next) => {
-	next();
-};
+const privateRoute = (req, res, next) => {};
 
 module.exports = { login, register, privateRoute };
